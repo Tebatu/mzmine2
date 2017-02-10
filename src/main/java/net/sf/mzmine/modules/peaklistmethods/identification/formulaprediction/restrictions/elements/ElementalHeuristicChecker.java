@@ -58,7 +58,9 @@ public class ElementalHeuristicChecker {
 
 	if (checkHC) {
 	    double rHC = eH / eC;
-	    if ((rHC < 0.1) || (rHC > 6))
+	    // Yaroslav Verkh. Change the elemental ratio to strict 99.7% ratios from 7 golden rules publication
+	    // The ratios of halogens are not changed
+	    if ((rHC < 0.2) || (rHC > 3.1))
 		return false;
 	}
 
@@ -67,7 +69,7 @@ public class ElementalHeuristicChecker {
 	    double rNC = eN / eC;
 	    double rOC = eO / eC;
 	    double rSC = eS / eC;
-	    if ((rNC > 4) || (rOC > 3) || (rPC > 2) || (rSC > 3))
+	    if ((rNC > 1.3) || (rOC > 1.2) || (rPC > 0.3) || (rSC > 0.8))
 		return false;
 	}
 
