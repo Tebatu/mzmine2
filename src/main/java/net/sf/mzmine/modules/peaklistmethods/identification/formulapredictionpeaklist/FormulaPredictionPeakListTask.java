@@ -196,7 +196,8 @@ public class FormulaPredictionPeakListTask extends AbstractTask {
 
             for (ResultFormula f : this.ResultingFormulas) {
                 SimplePeakIdentity newIdentity = new SimplePeakIdentity(
-                        f.getFormulaAsString());
+                		// Yaroslav Verkh. Display additional parameters to distinguish better formulas
+                		" Form" + f.getFormulaAsString() + " Iso" + f.getIsotopeScore() + " Mass" + f.getExactMass());
                 row.addPeakIdentity(newIdentity, false);
             }
 
