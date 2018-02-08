@@ -264,7 +264,10 @@ public final class MZmineCore {
 	return taskController;
     }
 
-    @Nonnull
+
+	// Removed @Nonnull
+	// Function returns null when called from logger (line 94 of this file)
+	//@Nonnull
     public static Desktop getDesktop() {
 	return desktop;
     }
@@ -302,7 +305,7 @@ public final class MZmineCore {
 	try {
 	    ClassLoader myClassLoader = MZmineCore.class.getClassLoader();
 	    InputStream inStream = myClassLoader
-		    .getResourceAsStream("META-INF/maven/io.github.mzmine/mzmine/pom.properties");
+		    .getResourceAsStream("META-INF/maven/io.github.mzmine/mzmine2/pom.properties");
 	    if (inStream == null)
 		return "0.0";
 	    Properties properties = new Properties();
