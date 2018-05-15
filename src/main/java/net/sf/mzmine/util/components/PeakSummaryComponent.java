@@ -28,8 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.Format;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -64,16 +63,9 @@ import net.sf.mzmine.modules.visualization.twod.TwoDVisualizerModule;
 import net.sf.mzmine.parameters.parametertypes.selectors.ScanSelection;
 
 import com.google.common.collect.Range;
-import dulab.adap.datamodel.IsotopicDistribution;
-import dulab.adap.datamodel.IsotopicDistributionParser;
-import java.util.ArrayList;
-import java.util.List;
 import net.sf.mzmine.datamodel.DataPoint;
 import net.sf.mzmine.datamodel.IsotopePattern.IsotopePatternStatus;
-import net.sf.mzmine.datamodel.PeakInformation;
-import net.sf.mzmine.datamodel.PeakList;
 import net.sf.mzmine.datamodel.impl.SimpleDataPoint;
-import net.sf.mzmine.datamodel.impl.SimpleFeature;
 import net.sf.mzmine.datamodel.impl.SimpleIsotopePattern;
 
 public class PeakSummaryComponent extends JPanel implements ActionListener {
@@ -420,17 +412,10 @@ public class PeakSummaryComponent extends JPanel implements ActionListener {
                         // ------------------------------
                         // Multiply isotope pattern by -1
                         // ------------------------------
-                        
-                        DataPoint[] newDataPoints = 
-                                new DataPoint[ip.getDataPoints().length];
-                        
-                        int count = 0;
-                        for (DataPoint dataPoint : ip.getDataPoints())
-                            newDataPoints[count++] = 
-                                    new SimpleDataPoint(
-                                            dataPoint.getMZ(),
-                                            -dataPoint.getIntensity()
-                                    );
+
+                        DataPoint[] newDataPoints = Arrays.stream(ip.getDataPoints())
+                                .map(p -> new SimpleDataPoint(p.getMZ(), -p.getIntensity()))
+                                .toArray(DataPoint[]::new);
                         
                         // ---------------------------
                         // Construct identity spectrum
@@ -462,7 +447,7 @@ public class PeakSummaryComponent extends JPanel implements ActionListener {
                         // Plot spectrum
                         // -------------
                         
-                        if (identityDataPoints.isEmpty()) // Plot raw spectrm and isotope pattern
+                        if (identityDataPoints.isEmpty()) // Plot raw spectrum and isotope pattern
                             SpectraVisualizerModule.showNewSpectrumWindow(
                                     dataFiles[i],
                                     peak.getRepresentativeScanNumber(),
